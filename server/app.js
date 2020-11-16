@@ -17,9 +17,9 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const dbURL = process.env.MONGODB_URI || 'mongodb://localhost/DomoMaker';
 
-//https://www.alphavantage.co/query?function=FX_WEEKLY&from_symbol=EUR&to_symbol=USD&apikey=demo
-//https://www.alphavantage.co/documentation/
-//let apiKey = "7TOGNX0K59HTDC9C";
+// https://www.alphavantage.co/query?function=FX_WEEKLY&from_symbol=EUR&to_symbol=USD&apikey=demo
+// https://www.alphavantage.co/documentation/
+// let apiKey = "7TOGNX0K59HTDC9C";
 
 // Setup mongoose option to use newer functionality
 const mongooseOptions = {
