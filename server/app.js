@@ -17,6 +17,10 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const dbURL = process.env.MONGODB_URI || 'mongodb://localhost/DomoMaker';
 
+//https://www.alphavantage.co/query?function=FX_WEEKLY&from_symbol=EUR&to_symbol=USD&apikey=demo
+//https://www.alphavantage.co/documentation/
+//let apiKey = "7TOGNX0K59HTDC9C";
+
 // Setup mongoose option to use newer functionality
 const mongooseOptions = {
   useNewUrlParser: true,
@@ -53,7 +57,7 @@ const router = require('./router.js');
 
 const app = express();
 app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
-app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
+app.use(favicon(`${__dirname}/../hosted/img/favicon.jpg`));
 app.use(compression());
 app.use(bodyParser.urlencoded({
   extended: true,
