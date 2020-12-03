@@ -10,7 +10,8 @@ var getCurrentPrice = function getCurrentPrice(e) {
 
 
   sendAjax('POST', '/getCurrentPrice', $("#searchForm").serialize(), function (result) {
-    //console.log(document.querySelector("#symbol").value);
+    console.log(document.querySelector("#symbol").value);
+    console.log(result.value);
     ReactDOM.render( /*#__PURE__*/React.createElement(BuyForm, {
       symbol: document.querySelector("#symbol").value,
       price: result.data,

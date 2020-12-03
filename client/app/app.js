@@ -8,7 +8,8 @@ const getCurrentPrice = (e) => {
 
 	//console.log($("#searchForm").serialize());
 	sendAjax('POST', '/getCurrentPrice', $("#searchForm").serialize(), (result) => {
-		//console.log(document.querySelector("#symbol").value);
+		console.log(document.querySelector("#symbol").value);
+		console.log(result.value);
 		ReactDOM.render(
 			<BuyForm symbol={document.querySelector("#symbol").value} price={result.data} csrf={document.querySelector("#csrf").value} />, document.querySelector("#transactions")
 		);

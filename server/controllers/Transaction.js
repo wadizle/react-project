@@ -77,7 +77,7 @@ const getCurrentPrice = (request, response) => {
   }
   let url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=';
   url += `${request.body.symbol}&apikey=7TOGNX0K59HTDC9C`;
-  fetch(url)
+  return fetch(url)
     .then((res) => res.json())
     .then((body) => {
       if (!body['Error Message']) {
@@ -86,7 +86,6 @@ const getCurrentPrice = (request, response) => {
         response.json({ data: 'Invalid Symbol' });
       }
     });
-  return response.json({ redirect: '/profile' });
 };
 
 const getInfo = (request, response) => {
