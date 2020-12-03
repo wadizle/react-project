@@ -22,7 +22,7 @@ const login = (request, response) => {
   const password = `${req.body.pass}`;
 
   if (!username || !password) {
-    return res.status(400).json({ error: 'RAWR! All fields are required' });
+    return res.status(400).json({ error: 'All fields are required' });
   }
 
   return Account.AccountModel.authenticate(username, password, (err, account) => {
@@ -31,9 +31,8 @@ const login = (request, response) => {
     }
 
     req.session.account = Account.AccountModel.toAPI(account);
-    // console.log(req.session.account);
 
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/profile' });
   });
 };
 
@@ -45,9 +44,8 @@ const signup = (request, response) => {
   req.body.username = `${req.body.username}`;
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
-  req.body.age = `${req.body.age}`;
 
-  if (!req.body.username || !req.body.pass || !req.body.pass2 || !req.body.age) {
+  if (!req.body.username || !req.body.pass || !req.body.pass2) {
     return res.status(400).json({ error: 'RAWR! All fields are required' });
   }
 
@@ -55,16 +53,11 @@ const signup = (request, response) => {
     return res.status(400).json({ error: 'RAWR! Passwords do not match' });
   }
 
-  if (!parseInt(req.body.age, 10)) {
-    return res.status(400).json({ error: 'Age must be a number' });
-  }
-
   return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
     const accountData = {
       username: req.body.username,
       salt,
       password: hash,
-      age: req.body.age,
     };
 
     const newAccount = new Account.AccountModel(accountData);
@@ -73,7 +66,7 @@ const signup = (request, response) => {
 
     savePromise.then(() => {
       req.session.account = Account.AccountModel.toAPI(newAccount);
-      return res.json({ redirect: '/maker' });
+      return res.json({ redirect: '/profile' });
     });
 
     savePromise.catch((err) => {
@@ -99,9 +92,36 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
+const updatePassword = (request, response) => {
+  const req = request;
+  const res = response;
+
+  const { username } = req.session.account;
+  if (req.body.pass !== req.body.pass2) {
+    return res.status(400).json({ error: 'Passwords do not Match' });
+  }
+
+  const password = req.body.pass;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  return Account.AccountModel.updatePassword(username, password, (err, account) => {
+    if (err) {
+      return res.status(401).json({ error: 'Error has Occurred' });
+    }
+
+    req.session.account = Account.AccountModel.toAPI(account);
+    req.session.destroy();
+    return res.json({ redirect: '/profile' });
+  });
+};
+
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getProfile = getProfile;
 module.exports.getToken = getToken;
+module.exports.updatePassword = updatePassword;

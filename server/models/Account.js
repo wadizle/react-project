@@ -1,6 +1,8 @@
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 
+mongoose.set('useFindAndModify', false);
+
 mongoose.Promise = global.Promise;
 
 let AccountModel = {};
@@ -24,10 +26,6 @@ const AccountSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  age: {
-    type: Number,
-    required: true,
-  },
   createdDate: {
     type: Date,
     default: Date.now,
@@ -37,7 +35,6 @@ const AccountSchema = new mongoose.Schema({
 AccountSchema.statics.toAPI = (doc) => ({
   // _id is built into your mongo document and is guaranteed to be unique
   username: doc.username,
-  age: doc.age,
   _id: doc._id,
   createdDate: new Date(doc.createdDate).toString(),
 });
@@ -84,6 +81,16 @@ AccountSchema.statics.authenticate = (username, password, callback) => {
 
       return callback();
     });
+  });
+};
+
+AccountSchema.statics.updatePassword = (username, password, callback) => {
+  AccountModel.generateHash(password, (salt, hash) => {
+    AccountModel.findOneAndUpdate(
+      { username },
+      { salt, password: hash },
+      callback,
+    );
   });
 };
 

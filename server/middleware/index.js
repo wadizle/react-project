@@ -7,7 +7,7 @@ const requiresLogin = (req, res, next) => {
 
 const requiresLogout = (req, res, next) => {
   if (req.session.account) {
-    return res.redirect('/maker');
+    return res.redirect('/profile');
   }
   return next();
 };
@@ -15,6 +15,7 @@ const requiresLogout = (req, res, next) => {
 const requiresSecure = (req, res, next) => {
   // this causes infinite redirects after Part D...
   // if (req.headers['x-forward-proto'] !== 'https') {
+  console.log(req.headers);
   if (false) {
     return res.redirect(`https://${req.hostname}${req.url}`);
   }

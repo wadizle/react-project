@@ -1,14 +1,12 @@
 const handleLogin = (e) => {
 	e.preventDefault();
 
-	$("#domoMessage").animate({width:'hide'}, 350);
-
 	if ($("#user").val() == '' || $("#pass").val() == '') {
-		handleError("RAWR! Username or password is empty");
+		handleError("Username or password is empty");
 		return false;
 	}
 
-	console.log($("input[name=_csrf]").val());
+	//console.log($("input[name=_csrf]").val());
 
 	sendAjax('POST', $("#loginForm").attr("action"), $("#loginForm").serialize(), redirect);
 
@@ -18,10 +16,8 @@ const handleLogin = (e) => {
 const handleSignup = (e) => {
 	e.preventDefault();
 
-	$("#domoMessage").animate({width:'hide'}, 350);
-
 	if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '' || $("#age").val() == '') {
-		handleError("RAWR! All fields are required");
+		handleError("All fields are required");
 		return false;
 	}
 
@@ -42,7 +38,8 @@ const LoginWindow = (props) => {
 				action="/login"
 				method="POST"
 				className="mainForm"
-			>
+		>
+			<h1>Login</h1>
 			<label htmlFor="username">Username: </label>
 			<input id="user" type="text" name="username" placeholder="username"></input>
 			<label htmlFor="pass">Password: </label>
@@ -62,15 +59,11 @@ const SignupWindow = (props) => {
 			method="POST"
 			className="mainForm"
 		>
-			<label htmlFor="username">Username: </label>
-			<input id="user" type="text" name="username" placeholder="username"></input>
+			<h1>Sign Up</h1>
 			<label htmlFor="pass">Password: </label>
 			<input id="pass" type="password" name="pass" placeholder="password"></input>
-			<label htmlFor="pass2">Password: </label>
-			<input id="pass2" type="password" name="pass2" placeholder="retype password"></input>
-
-			<label htmlFor="age">Age: </label>
-			<input id="age" type="text" name="age" placeholder="age"></input>
+			<label htmlFor="pass2">Retype: </label>
+			<input id="pass2" type="password" name="pass2" placeholder="retype"></input>
 
 			<input type="hidden" name="_csrf" value={props.csrf}></input>
 			<input className="formSubmit" type="submit" value="Sign Up"></input>

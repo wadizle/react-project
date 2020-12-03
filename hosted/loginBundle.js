@@ -2,28 +2,22 @@
 
 var handleLogin = function handleLogin(e) {
   e.preventDefault();
-  $("#domoMessage").animate({
-    width: 'hide'
-  }, 350);
 
   if ($("#user").val() == '' || $("#pass").val() == '') {
-    handleError("RAWR! Username or password is empty");
+    handleError("Username or password is empty");
     return false;
-  }
+  } //console.log($("input[name=_csrf]").val());
 
-  console.log($("input[name=_csrf]").val());
+
   sendAjax('POST', $("#loginForm").attr("action"), $("#loginForm").serialize(), redirect);
   return false;
 };
 
 var handleSignup = function handleSignup(e) {
   e.preventDefault();
-  $("#domoMessage").animate({
-    width: 'hide'
-  }, 350);
 
   if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '' || $("#age").val() == '') {
-    handleError("RAWR! All fields are required");
+    handleError("All fields are required");
     return false;
   }
 
@@ -44,7 +38,7 @@ var LoginWindow = function LoginWindow(props) {
     action: "/login",
     method: "POST",
     className: "mainForm"
-  }, /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("h1", null, "Login"), /*#__PURE__*/React.createElement("label", {
     htmlFor: "username"
   }, "Username: "), /*#__PURE__*/React.createElement("input", {
     id: "user",
@@ -77,14 +71,7 @@ var SignupWindow = function SignupWindow(props) {
     action: "/signup",
     method: "POST",
     className: "mainForm"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "username"
-  }, "Username: "), /*#__PURE__*/React.createElement("input", {
-    id: "user",
-    type: "text",
-    name: "username",
-    placeholder: "username"
-  }), /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("h1", null, "Sign Up"), /*#__PURE__*/React.createElement("label", {
     htmlFor: "pass"
   }, "Password: "), /*#__PURE__*/React.createElement("input", {
     id: "pass",
@@ -93,18 +80,11 @@ var SignupWindow = function SignupWindow(props) {
     placeholder: "password"
   }), /*#__PURE__*/React.createElement("label", {
     htmlFor: "pass2"
-  }, "Password: "), /*#__PURE__*/React.createElement("input", {
+  }, "Retype: "), /*#__PURE__*/React.createElement("input", {
     id: "pass2",
     type: "password",
     name: "pass2",
-    placeholder: "retype password"
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "age"
-  }, "Age: "), /*#__PURE__*/React.createElement("input", {
-    id: "age",
-    type: "text",
-    name: "age",
-    placeholder: "age"
+    placeholder: "retype"
   }), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
     name: "_csrf",
@@ -156,16 +136,12 @@ $(document).ready(function () {
 "use strict";
 
 var handleError = function handleError(message) {
-  $("#errorMessage").text(message);
-  $("#domoMessage").animate({
-    width: 'toggle'
-  }, 350);
+  //$("#errorMessage").text(message);
+  //$("#domoMessage").animate({width:'toggle'},350);
+  console.log(message);
 };
 
 var redirect = function redirect(response) {
-  $("#domoMessage").animate({
-    width: 'hide'
-  }, 350);
   window.location = response.redirect;
 };
 
